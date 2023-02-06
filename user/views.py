@@ -18,7 +18,7 @@ import datetime
 
 @login_required(login_url='login')
 def homePage(request):
-    return render(request, 'success.html')
+    return render(request, 'chartjs.html')
 
 
 @never_cache
