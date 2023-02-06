@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load static %}
+        <meta charset="utf-8">
+        <title>Accueil</title>
+        <meta name="description" content="Log in Page for algerie telecome user">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        
+    </head>
+    <script src="{% static 'css/node_modules/chart.js/dist/Chart.js' %}"></script>
+    <div>
+        <canvas id="graphe1" width="300" height="200"></canvas>
+    </div>
+    <script type="text/javascript">
+        var ctx = document.getElementById('graphe1').getContext('2d');
+        
+        var graphe1=new Chart(ctx, {
+        type: 'bar',
+        data: [{% for info in values  %}parseInt("{{ info }}"),{% endfor%}],
+        backroundColor: ['rgb(255, 99, 132)',
+        'rgb(54, 162, 235)',
+        'rgb(255, 206, 86)',
+        'rgb(75, 192, 192)',
+        'rgb(153, 102, 255)',
+        'rgb(255, 159, 64)'],
+        borderColor: ['rgb(255, 99, 132)',
+        'rgb(54, 162, 235)',
+        'rgb(255, 206, 86)',
+        'rgb(75, 192, 192)',
+        'rgb(153, 102, 255)',
+        'rgb(255, 159, 64)'],
+
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+        })
+
+
+
+    </script>
+
+
+
+
+</html>
