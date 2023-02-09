@@ -1,111 +1,291 @@
 {% extends 'partials/base.html' %}
+{% load static %}
+
 {% block title %} Home{% endblock title %}
 {% block content %}
+
 <div class="page-wrapper">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}"/>
+    
     <!-- ============================================================== -->
     <!-- Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
-    <div class="page-breadcrumb">
+    <div class="page-breadcrumb my-3">
         <div class="row align-items-center">
-            <div class="col-md-6 col-8 align-self-center">
-                <h3 class="page-title mb-0 p-0">Dashboard</h3>
-                <div class="d-flex align-items-center">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-            <div class="col-md-6 col-4 align-self-center">
-                <div class="text-end upgrade-btn">
-                    <a href="https://www.wrappixel.com/templates/materialpro/"
-                        class="btn btn-danger d-none d-md-inline-block text-white" target="_blank">Upgrade to
-                        Pro</a>
-                </div>
+            <div class="col-12 align-self-center">
+                <h3 class="page-title text-center">Dashboard</h3>
             </div>
         </div>
     </div>
-    <!-- ============================================================== -->
-    <!-- End Bread crumb and right sidebar toggle -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- Container fluid  -->
-    <!-- ============================================================== -->
+    <div id="center" class="row my-4 mx-5 align-content-center">
+        <div class="col-3">
+            
+            <div id="obj" class="card">
+                <dic class="card-header-pills">
+                <div class="card-header p-3 pt-2">
+                    <div class="row">
+                        <div class="col-12"><h4>objectif</h></div>
+                    </div>
+                    <div class="col-12 my-0">
+                        <div class="text-end pt-1">
+                            
+                            <h4 class="mb-1">5000</h4>
+                        </div>
+
+                    </div>
+                    
+
+                </div>
+                
+            </div>
+
+        </div>
+        <div class="col-3">
+            
+            <div class="card">
+                
+                <div class="card-header p-3 pt-2">
+                    <div class="row">
+                        <div class="col-12"><h4>norme</h4></div>
+                    </div>
+                    <div class="col-12 my-0">
+                        <div class="text-end pt-1">
+                            
+                            <h4 class="mb-0">5000</h4>
+                        </div>
+
+                    </div>
+                    
+
+                </div>
+                
+            </div>
+
+        </div>
+
+
+
+    </div>
     <div class="container-fluid">
-        <!-- ============================================================== -->
-        <!-- Sales chart -->
-        <!-- ============================================================== -->
         <div class="row">
-            <!-- Column -->
-            <div class="col-lg-8">
+            
+            <div class="col-lg-6 col-sm-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12">
                                 <div class="d-flex flex-wrap align-items-center">
                                     <div>
-                                        <h3 class="card-title">Sales Overview</h3>
-                                        <h6 class="card-subtitle">Ample Admin Vs Pixel Admin</h6>
-                                    </div>
-                                    <div class="ms-lg-auto mx-sm-auto mx-lg-0">
-                                        <ul class="list-inline d-flex">
-                                            <li class="me-4">
-                                                <h6 class="text-success"><i
-                                                        class="fa fa-circle font-10 me-2 "></i>Ample</h6>
-                                            </li>
-                                            <li>
-                                                <h6 class="text-info"><i
-                                                        class="fa fa-circle font-10 me-2"></i>Pixel</h6>
-                                            </li>
-                                        </ul>
+                                        <h3 class="card-title">Infoirmation over-view</h3>
+                                        <h6 class="card-subtitle"></h6>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12">
-                                <div class="amp-pxl" style="height: 360px;">
-                                    <div class="chartist-tooltip"></div>
-                                </div>
+                                
+                                   <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">DOT</label>
+                                        <select class="form-select" name="DOT" id="DOT">
+                                            <option  value="">all</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label asp-for="Num" class="form-label">Numéro</label>
+                                        <input asp-for="Num" type="text" class="form-control" placeholder="Numéro">
+                                    </div>
+
+                                   </div>
+                                        
+                               
+                            </div>
+                            
+                            <div class="col-12">
+                                <canvas id="graphe1" height="90"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-6 col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                        <h3 class="card-title">Our Visitors </h3>
-                        <h6 class="card-subtitle">Different Devices Used to Visit</h6>
-                        <div id="visitor"
-                            style="height: 290px; width: 100%; max-height: 290px; position: relative;"
-                            class="c3">
-                            <div class="c3-tooltip-container"
-                                style="position: absolute; pointer-events: none; display: none;">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="d-flex flex-wrap align-items-center">
+                                    <div>
+                                        <h3 class="card-title">Infoirmation over-view</h3>
+                                        <h6 class="card-subtitle"></h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                
+                                   <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">DOT</label>
+                                        <select class="form-select" name="DOT" id="DOT">
+                                            <option  value="">all</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label asp-for="Num" class="form-label">Numéro</label>
+                                        <input asp-for="Num" type="text" class="form-control" placeholder="Numéro">
+                                    </div>
+
+                                   </div>
+                                        
+                               
+                            </div>
+                            
+                            <div class="col-12">
+                                <canvas id="graphe1" height="90"></canvas>
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <hr class="mt-0 mb-0">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            
+            <div class="col-lg-6 col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="d-flex flex-wrap align-items-center">
+                                    <div>
+                                        <h3 class="card-title">Infoirmation over-view</h3>
+                                        <h6 class="card-subtitle"></h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                
+                                   <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">DOT</label>
+                                        <select class="form-select" name="DOT" id="DOT">
+                                            <option  value="">all</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label asp-for="Num" class="form-label">Numéro</label>
+                                        <input asp-for="Num" type="text" class="form-control" placeholder="Numéro">
+                                    </div>
+
+                                   </div>
+                                        
+                               
+                            </div>
+                            
+                            <div class="col-12">
+                                <canvas id="graphe1" height="90"></canvas>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body text-center ">
-                        <ul class="list-inline d-flex justify-content-center align-items-center mb-0">
-                            <li class="me-4">
-                                <h6 class="text-info"><i class="fa fa-circle font-10 me-2 "></i>Mobile</h6>
-                            </li>
-                            <li class="me-4">
-                                <h6 class=" text-primary"><i class="fa fa-circle font-10 me-2"></i>Desktop</h6>
-                            </li>
-                            <li class="me-4">
-                                <h6 class=" text-success"><i class="fa fa-circle font-10 me-2"></i>Tablet</h6>
-                            </li>
-                        </ul>
+                </div>
+            </div>
+            <div class="col-lg-6 col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="d-flex flex-wrap align-items-center">
+                                    <div>
+                                        <h3 class="card-title">Infoirmation over-view</h3>
+                                        <h6 class="card-subtitle"></h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                
+                                   <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">DOT</label>
+                                        <select class="form-select" name="DOT" id="DOT">
+                                            <option  value="">all</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label asp-for="Num" class="form-label">Numéro</label>
+                                        <input asp-for="Num" type="text" class="form-control" placeholder="Numéro">
+                                    </div>
+
+                                   </div>
+                                        
+                               
+                            </div>
+                            
+                            <div class="col-12">
+                                <canvas id="graphe1" height="90"></canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>                
     </div>
 </div>
+
+
+
+
+
+<script>
+    let input = null;
+    const getData = async () => {
+        const resp = await fetch('http://127.0.0.1:8000/api/cmps/?month=1');
+        const data = await resp.json()
+        const binome = data.map(info => info.binome)
+        const cmp_names = data.map(info => info.cmp)
+        const date = data.map(info => info.date)
+        let ctx = document.getElementById('graphe1').getContext('2d');
+
+        let myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: date,
+            datasets: [{
+                data: binome,
+                labels:['binome'],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+});
+
+    }
+
+    getData().catch(err => console.log(err)) 
+</script>
+<script>
+
+</script>
+</body>
+</html>
 
 
 
