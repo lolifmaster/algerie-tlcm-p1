@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %} Home{% endblock title %}
-{% block name %} "{{ name }}" {% endblock name %}
+{% block name %} {{ name }} {% endblock name %}
 {% block content %}
 
 <div class="page-wrapper">
@@ -70,31 +70,27 @@
     
     <div class="container-fluid">
         <div  id="filter"  class="row my-2">
-            <div class="col-8">
+            <div class="col-6">
                 <div class="card">
                     <div class="card-body">
                         <div class="col-12">
                                     
                             <div class="row">
-                             <div class="col-md-3 mb-3">
+                             {% if dot.name == 'ALGER CENTRE' %}   
+                             <div class="col-md-4 mb-3">
                                  <label class="form-label">DOT</label>
                                  <select class="form-select" name="DOT" id="DOT">
                                      <option  value="">all</option>
                                  </select>
                              </div>
-                             <div class="col-md-3 mb-3">
+                             {% endif %}
+                             <div class="col-md-4 mb-3">
                                 <label class="form-label">CMP</label>
-                                <select class="form-select" name="DOT" id="CMP">
-                                    <option  value="">all</option>
+                                <select class="form-select" name="cmp" id="CMP">
+                                    <option  value="all">all</option>
                                 </select>
                              </div>
-                             <div class="col-md-3 mb-3">
-                                <label class="form-label">CMP</label>
-                                <select class="form-select" name="DOT" id="CMP">
-                                    <option  value="">all</option>
-                                </select>
-                             </div>
-                             <div class="col-md-3 mb-3">
+                             <div class="col-md-4 mb-3">
                                 <label class="form-label">date</label>
                                 <input class="form-control" type="date" >
 
@@ -122,7 +118,7 @@
                             <div class="col-12">
                                 <div class="d-flex flex-wrap align-items-center">
                                     <div>
-                                        <h3 class="card-title">Infoirmation over-view</h3>
+                                        <h3 class="card-title">Total</h3>
                                         <h6 class="card-subtitle"></h6>
                                     </div>
                                 </div>
@@ -130,7 +126,7 @@
                             
                             
                             <div class="col-12">
-                                <canvas id="graphe1" height="90"></canvas>
+                                <canvas id="total" height="90"></canvas>
                             </div>
                         </div>
                     </div>
@@ -143,7 +139,7 @@
                             <div class="col-12">
                                 <div class="d-flex flex-wrap align-items-center">
                                     <div>
-                                        <h3 class="card-title">Infoirmation over-view</h3>
+                                        <h3 class="card-title">Total raccordement client</h3>
                                         <h6 class="card-subtitle"></h6>
                                     </div>
                                 </div>
@@ -151,7 +147,7 @@
                             
                             
                             <div class="col-12">
-                                <canvas id="graphe1" height="90"></canvas>
+                                <canvas id="totalclient" height="90"></canvas>
                             </div>
                         </div>
                     </div>
@@ -167,7 +163,7 @@
                             <div class="col-12">
                                 <div class="d-flex flex-wrap align-items-center">
                                     <div>
-                                        <h3 class="card-title">Infoirmation over-view</h3>
+                                        <h3 class="card-title">Binome</h3>
                                         <h6 class="card-subtitle"></h6>
                                     </div>
                                 </div>
@@ -175,7 +171,7 @@
                             
                             
                             <div class="col-12">
-                                <canvas id="graphe1" height="90"></canvas>
+                                <canvas id="bin" height="90"></canvas>
                             </div>
                         </div>
                     </div>
@@ -188,7 +184,7 @@
                             <div class="col-12">
                                 <div class="d-flex flex-wrap align-items-center">
                                     <div>
-                                        <h3 class="card-title">Infoirmation over-view</h3>
+                                        <h3 class="card-title">FTTH , DHDB , LA/LS</h3>
                                         <h6 class="card-subtitle"></h6>
                                     </div>
                                 </div>
@@ -196,7 +192,7 @@
                             
                             
                             <div class="col-12">
-                                <canvas id="graphe1" height="90"></canvas>
+                                <canvas id="dhft" height="90"></canvas>
                             </div>
                         </div>
                     </div>
@@ -217,14 +213,14 @@
 
 
 <script>
-    let ctx = document.getElementById('graphe1').getContext('2d');
-    let myChart = new Chart(ctx, {
+    let ctx = document.getElementById('total').getContext('2d');
+    let total = new Chart(ctx, {
         type: 'line',
         data: {
             labels: [],
             datasets: [{
                 data: [],
-                labels:['binome'],
+                label:['total'],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
@@ -252,38 +248,220 @@
             }
         }
 });
+let ctx2 = document.getElementById('totalclient').getContext('2d');
+    let totalclient = new Chart(ctx2, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                data: [],
+                label:['Total raccordement client'],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+});
+let ctx3 = document.getElementById('bin').getContext('2d');
+    let bin = new Chart(ctx3, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                data: [],
+                label:['binome'],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+});
+let ctx4 = document.getElementById('dhft').getContext('2d');
+    let dhft = new Chart(ctx4, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                data: [],
+                label:['FTTH'],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            },{
+                data: [],
+                label:['DHDB'],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            },{
+                data: [],
+                label:['LALS'],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }
+        ]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+});
+
     
 let input = null;
-    const getData = async (chart) => {
+    const getData = async (chart1,chart2,chart3,chart4,url) => {
         const resp = await fetch('http://127.0.0.1:8000/api/cmps/?month=1');
         const data = await resp.json();
-        const binome = data.map(info => info.binome);
-        const cmp_names = data.map(info => info.cmp);
-        console.log(binome);
-        const date = data.map(info => info.date);
-        chart.data.datasets[0].data = binome;
-        chart.data.labels = date;
-        chart.update();
+        if (data.length === 0) {
+            chart1.data.datasets[0].data = [];
+            chart1.data.labels = [];
+            chart1.update();
+            chart2.data.datasets[0].data = [];
+            chart2.data.labels = [];
+            chart2.update();
+            chart3.data.datasets[0].data = [];
+            chart3.data.labels = [];
+            chart3.update();
+            chart4.data.datasets[0].data = [];
+            chart4.data.labels = [];
+            chart4.data.datasets[1].data = [];
+            chart4.data.datasets[2].data = [];
+            chart4.update();
+
+
+        }
+        else{
+            const binome = data.map(info => info.binome);
+            const ftth=data.map(info => info.ftth);
+            const la_ls=data.map(info => info.la_ls);
+            const total=data.map(info => info.total);
+            const date = data.map(info => info.date);
+            const dhdb=data.map(info => info.dhdb); 
+            const total_raccordement_client=data.map(info => info.total_raccordement_client);
+            console.log(binome);
+            console.log(ftth);
+            console.log(la_ls);
+            console.log(total);
+            console.log(date);
+            console.log(dhdb);
+            console.log(total_raccordement_client);
+            
+
+            chart1.data.datasets[0].data = total;
+            chart1.data.labels = date;
+            chart1.update();
+
+            
+            chart2.data.datasets[0].data = total_raccordement_client;
+            chart2.data.labels = date;
+            chart2.update();
+
+
+            chart3.data.datasets[0].data = binome;
+            chart3.data.labels = date;
+            chart3.update();
+
+            chart4.data.datasets[0].data = ftth;
+            chart4.data.labels = date;
+            chart4.data.datasets[1].data = dhdb;
+            chart4.data.datasets[2].data = la_ls;
+            chart4.update();
+        }
         
 
         
 
     }
 
-    getData(myChart).catch(err => console.log(err));
-    const Changedata = async (chart) => {
-        const resp = await fetch('http://127.0.0.1:8000/api/dot/8891db97b76f4840aac0e9abd5e9f323/?month=1');
-        const data = await resp.json();
-        const binome = data.map(info => info.binome);
-        const date = data.map(info => info.date);
-        chart.data.datasets[0].data = binome
-        chart.data.labels = date;
-        console.log(binome);
-        
-
-        chart.update();
-    }
-    Changedata(myChart).catch(err => console.log(err));
+    getData(total,totalclient,bin,dhft,"").catch(err => console.log(err));
     
 </script>
 </body>

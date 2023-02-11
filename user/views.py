@@ -21,7 +21,7 @@ def homePage(request):
     dot = Dot.objects.get(name=request.user.dot)
     context={
         'name':request.user.username,
-        'dot':dot.name,
+        'dot':dot,
 
     }
     return render(request, 'chartjs.html',context)
@@ -77,7 +77,7 @@ def logoutUser(request):
 @login_required
 def getDotInformations(request):
     try:
-        dot = Dot.objects.get(name=request.user.dot)
+        dot = Dot.objects.all()
     except ObjectDoesNotExist:
         return Response({'Error': 'failed to fetch data'}, status=status.HTTP_401_UNAUTHORIZED)
     month = request.query_params.get('month', datetime.date.today().month)
@@ -205,8 +205,8 @@ def getDotInformation(request, pk):
 @login_required
 def getCmpInformations(request):
     try:
-        dot = Dot.objects.get(name=request.user.dot)
-        cmp = Cmp.objects.filter(dot=dot).all()
+        #dot = Dot.objects.get(name=request.user.dot)
+        cmp = Cmp.objects.all()
     except ObjectDoesNotExist:
         return Response({'Error': 'failed to fetch data'}, status=status.HTTP_401_UNAUTHORIZED)
     month = request.query_params.get('month', datetime.date.today().month)
