@@ -1,8 +1,13 @@
 #obj{
-    background-color: #17a2b8 !important;
+    background-color: #1e88e5 !important;
     
 }
 #center{
     display: flex;
     justify-content: center;
+}
+#filter{
+    display: flex;
+    justify-content: right;
+    margin-top: 5px;
 }

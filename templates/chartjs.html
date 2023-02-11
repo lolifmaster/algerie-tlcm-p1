@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block title %} Home{% endblock title %}
+{% block name %} "{{ name }}" {% endblock name %}
 {% block content %}
 
 <div class="page-wrapper">
@@ -66,7 +67,52 @@
 
 
     </div>
+    
     <div class="container-fluid">
+        <div  id="filter"  class="row my-2">
+            <div class="col-8">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-12">
+                                    
+                            <div class="row">
+                             <div class="col-md-3 mb-3">
+                                 <label class="form-label">DOT</label>
+                                 <select class="form-select" name="DOT" id="DOT">
+                                     <option  value="">all</option>
+                                 </select>
+                             </div>
+                             <div class="col-md-3 mb-3">
+                                <label class="form-label">CMP</label>
+                                <select class="form-select" name="DOT" id="CMP">
+                                    <option  value="">all</option>
+                                </select>
+                             </div>
+                             <div class="col-md-3 mb-3">
+                                <label class="form-label">CMP</label>
+                                <select class="form-select" name="DOT" id="CMP">
+                                    <option  value="">all</option>
+                                </select>
+                             </div>
+                             <div class="col-md-3 mb-3">
+                                <label class="form-label">date</label>
+                                <input class="form-control" type="date" >
+
+                             </div>
+                             
+    
+                            </div>
+                                 
+                        
+                     </div>
+    
+                    </div>
+                </div>
+    
+            </div>
+    
+    
+        </div>
         <div class="row">
             
             <div class="col-lg-6 col-sm-12">
@@ -81,24 +127,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12">
-                                
-                                   <div class="row">
-                                    <div class="col-md-4 mb-3">
-                                        <label class="form-label">DOT</label>
-                                        <select class="form-select" name="DOT" id="DOT">
-                                            <option  value="">all</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-4 mb-3">
-                                        <label asp-for="Num" class="form-label">Numéro</label>
-                                        <input asp-for="Num" type="text" class="form-control" placeholder="Numéro">
-                                    </div>
-
-                                   </div>
-                                        
-                               
-                            </div>
+                            
                             
                             <div class="col-12">
                                 <canvas id="graphe1" height="90"></canvas>
@@ -119,24 +148,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12">
-                                
-                                   <div class="row">
-                                    <div class="col-md-4 mb-3">
-                                        <label class="form-label">DOT</label>
-                                        <select class="form-select" name="DOT" id="DOT">
-                                            <option  value="">all</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-4 mb-3">
-                                        <label asp-for="Num" class="form-label">Numéro</label>
-                                        <input asp-for="Num" type="text" class="form-control" placeholder="Numéro">
-                                    </div>
-
-                                   </div>
-                                        
-                               
-                            </div>
+                            
                             
                             <div class="col-12">
                                 <canvas id="graphe1" height="90"></canvas>
@@ -160,24 +172,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12">
-                                
-                                   <div class="row">
-                                    <div class="col-md-4 mb-3">
-                                        <label class="form-label">DOT</label>
-                                        <select class="form-select" name="DOT" id="DOT">
-                                            <option  value="">all</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-4 mb-3">
-                                        <label asp-for="Num" class="form-label">Numéro</label>
-                                        <input asp-for="Num" type="text" class="form-control" placeholder="Numéro">
-                                    </div>
-
-                                   </div>
-                                        
-                               
-                            </div>
+                            
                             
                             <div class="col-12">
                                 <canvas id="graphe1" height="90"></canvas>
@@ -198,24 +193,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12">
-                                
-                                   <div class="row">
-                                    <div class="col-md-4 mb-3">
-                                        <label class="form-label">DOT</label>
-                                        <select class="form-select" name="DOT" id="DOT">
-                                            <option  value="">all</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-4 mb-3">
-                                        <label asp-for="Num" class="form-label">Numéro</label>
-                                        <input asp-for="Num" type="text" class="form-control" placeholder="Numéro">
-                                    </div>
-
-                                   </div>
-                                        
-                               
-                            </div>
+                            
                             
                             <div class="col-12">
                                 <canvas id="graphe1" height="90"></canvas>
@@ -229,25 +207,23 @@
 </div>
 
 
-
+<script>
+    $(function () {
+      $('#start-month').datetimepicker({
+        format: 'MM/YYYY'
+      });
+    });
+  </script>
 
 
 <script>
-    let input = null;
-    const getData = async () => {
-        const resp = await fetch('http://127.0.0.1:8000/api/cmps/?month=1');
-        const data = await resp.json()
-        const binome = data.map(info => info.binome)
-        const cmp_names = data.map(info => info.cmp)
-        const date = data.map(info => info.date)
-        let ctx = document.getElementById('graphe1').getContext('2d');
-
-        let myChart = new Chart(ctx, {
+    let ctx = document.getElementById('graphe1').getContext('2d');
+    let myChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: date,
+            labels: [],
             datasets: [{
-                data: binome,
+                data: [],
                 labels:['binome'],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
@@ -276,13 +252,39 @@
             }
         }
 });
+    
+let input = null;
+    const getData = async (chart) => {
+        const resp = await fetch('http://127.0.0.1:8000/api/cmps/?month=1');
+        const data = await resp.json();
+        const binome = data.map(info => info.binome);
+        const cmp_names = data.map(info => info.cmp);
+        console.log(binome);
+        const date = data.map(info => info.date);
+        chart.data.datasets[0].data = binome;
+        chart.data.labels = date;
+        chart.update();
+        
+
+        
 
     }
 
-    getData().catch(err => console.log(err)) 
-</script>
-<script>
+    getData(myChart).catch(err => console.log(err));
+    const Changedata = async (chart) => {
+        const resp = await fetch('http://127.0.0.1:8000/api/dot/8891db97b76f4840aac0e9abd5e9f323/?month=1');
+        const data = await resp.json();
+        const binome = data.map(info => info.binome);
+        const date = data.map(info => info.date);
+        chart.data.datasets[0].data = binome
+        chart.data.labels = date;
+        console.log(binome);
+        
 
+        chart.update();
+    }
+    Changedata(myChart).catch(err => console.log(err));
+    
 </script>
 </body>
 </html>

@@ -18,7 +18,13 @@ import datetime
 
 @login_required(login_url='login')
 def homePage(request):
-    return render(request, 'chartjs.html')
+    dot = Dot.objects.get(name=request.user.dot)
+    context={
+        'name':request.user.username,
+        'dot':dot.name,
+
+    }
+    return render(request, 'chartjs.html',context)
 
 
 @never_cache
@@ -78,7 +84,55 @@ def getDotInformations(request):
     year = request.query_params.get('year', datetime.date.today().year)
     data = InformationDot.objects.filter(dot=dot, date__month=month, date__year=year).order_by('date')
     srl = serializers.InformationDotSerializer(data, many=True)
-    return Response(srl.data)
+    h=list()
+    p= dict()
+    date=datetime.datetime(1,1,1)
+    for i in srl.data:
+        if date==i["date"]:
+            p["total_raccordement_client"]=i["total_raccordement_client"]+p["total_raccordement_client"]
+            p["auto"]=i["auto"]+p["auto"]
+            p["binome"]=i["binome"]+p["binome"]
+            p["dhdb"]=i["dhdb"]+p["dhdb"]
+            p["ftth"]=i["ftth"]+p["ftth"]
+            p["la_ls"]=i["la_ls"]+p["la_ls"]
+            p["sans_specialite"]=i["sans_specialite"]+p["sans_specialite"]
+            p["total"]=i["total"]+p["total"]
+            p["q_o_s"]=i["q_o_s"]+p["q_o_s"]
+            p["norme"]=i["norme"]+p["norme"]
+            p["objectif"]=i["objectif"]+p["objectif"]
+        else:
+            if len(h)== 0:
+                date=i["date"]
+                p["date"]=i["date"]
+                p["total_raccordement_client"]=i["total_raccordement_client"]
+                p["auto"]=i["auto"]
+                p["binome"]=i["binome"]
+                p["dhdb"]=i["dhdb"]
+                p["ftth"]=i["ftth"]
+                p["la_ls"]=i["la_ls"]
+                p["sans_specialite"]=i["sans_specialite"]
+                p["total"]=i["total"]
+                p["q_o_s"]=i["q_o_s"]
+                p["norme"]=i["norme"]
+                p["objectif"]=i["objectif"]
+            else:
+                h.append(p)
+                date=i["date"]
+                p["date"]=i["date"]
+                p["total_raccordement_client"]=i["total_raccordement_client"]
+                p["auto"]=i["auto"]
+                p["binome"]=i["binome"]
+                p["dhdb"]=i["dhdb"]
+                p["ftth"]=i["ftth"]
+                p["la_ls"]=i["la_ls"]
+                p["sans_specialite"]=i["sans_specialite"]
+                p["total"]=i["total"]
+                p["q_o_s"]=i["q_o_s"]
+                p["norme"]=i["norme"]
+                p["objectif"]=i["objectif"]
+
+    h.append(p)
+    return Response(h)
 
 
 @api_view(['GET'])
@@ -94,7 +148,55 @@ def getDotInformation(request, pk):
     except ObjectDoesNotExist:
         return Response({'Error': 'failed to fetch data'}, status=status.HTTP_401_UNAUTHORIZED)
     srl = serializers.InformationDotSerializer(data, many=True)
-    return Response(srl.data)
+    h=list()
+    p= dict()
+    date=datetime.datetime(1,1,1)
+    for i in srl.data:
+        if date==i["date"]:
+            p["total_raccordement_client"]=i["total_raccordement_client"]+p["total_raccordement_client"]
+            p["auto"]=i["auto"]+p["auto"]
+            p["binome"]=i["binome"]+p["binome"]
+            p["dhdb"]=i["dhdb"]+p["dhdb"]
+            p["ftth"]=i["ftth"]+p["ftth"]
+            p["la_ls"]=i["la_ls"]+p["la_ls"]
+            p["sans_specialite"]=i["sans_specialite"]+p["sans_specialite"]
+            p["total"]=i["total"]+p["total"]
+            p["q_o_s"]=i["q_o_s"]+p["q_o_s"]
+            p["norme"]=i["norme"]+p["norme"]
+            p["objectif"]=i["objectif"]+p["objectif"]
+        else:
+            if len(h)== 0:
+                date=i["date"]
+                p["date"]=i["date"]
+                p["total_raccordement_client"]=i["total_raccordement_client"]
+                p["auto"]=i["auto"]
+                p["binome"]=i["binome"]
+                p["dhdb"]=i["dhdb"]
+                p["ftth"]=i["ftth"]
+                p["la_ls"]=i["la_ls"]
+                p["sans_specialite"]=i["sans_specialite"]
+                p["total"]=i["total"]
+                p["q_o_s"]=i["q_o_s"]
+                p["norme"]=i["norme"]
+                p["objectif"]=i["objectif"]
+            else:
+                h.append(p)
+                date=i["date"]
+                p["date"]=i["date"]
+                p["total_raccordement_client"]=i["total_raccordement_client"]
+                p["auto"]=i["auto"]
+                p["binome"]=i["binome"]
+                p["dhdb"]=i["dhdb"]
+                p["ftth"]=i["ftth"]
+                p["la_ls"]=i["la_ls"]
+                p["sans_specialite"]=i["sans_specialite"]
+                p["total"]=i["total"]
+                p["q_o_s"]=i["q_o_s"]
+                p["norme"]=i["norme"]
+                p["objectif"]=i["objectif"]
+
+    h.append(p)
+    return Response(h)
 
 # Cmp data
 
