@@ -205,8 +205,11 @@ def getDotInformation(request, pk):
 @login_required
 def getCmpInformations(request):
     try:
-        #dot = Dot.objects.get(name=request.user.dot)
-        cmp = Cmp.objects.all()
+        dot = Dot.objects.get(name=request.user.dot)
+        if(dot.name=='ALGER CENTRE'):
+            cmp = Cmp.objects.all()
+        else:
+            cmp=Cmp.objects.filter(dot=dot).all()
     except ObjectDoesNotExist:
         return Response({'Error': 'failed to fetch data'}, status=status.HTTP_401_UNAUTHORIZED)
     month = request.query_params.get('month', datetime.date.today().month)
@@ -334,7 +337,10 @@ def getCmpInformation(request, pk):
 def getCmpsName(request):
     try:
         dot = Dot.objects.get(name=request.user.dot)
-        cmp = Cmp.objects.filter(dot_id=dot).all()
+        if(dot.name=='ALGER CENTRE'):
+            cmp = Cmp.objects.all()
+        else:
+            cmp=Cmp.objects.filter(dot=dot).all() 
     except ObjectDoesNotExist:
         return Response({'Error': 'failed to fetch data'}, status=status.HTTP_401_UNAUTHORIZED)
     srl = serializers.CmpSerializer(cmp, many=True)
@@ -345,10 +351,26 @@ def getCmpsName(request):
 @login_required
 def getCmpName(request, pk):
     try:
-        cmp = Cmp.objects.get(id=pk)
+        dot = Dot.objects.get(id=pk)
+        cmp = Cmp.objects.filter(dot=dot)
     except ValidationError:
         return Response({'Error': 'not a valid id'}, status=status.HTTP_404_NOT_FOUND)
     except ObjectDoesNotExist:
         return Response({'Error': 'failed to fetch data'}, status=status.HTTP_404_NOT_FOUND)
-    srl = serializers.CmpSerializer(cmp, many=False)
+    srl = serializers.CmpSerializer(cmp, many=True)
+    return Response(srl.data)
+
+
+
+
+@api_view(['GET'])
+@login_required
+def getDotsName(request):
+    try:
+        dot = Dot.objects.all()
+    except ValidationError:
+        return Response({'Error': 'not a valid id'}, status=status.HTTP_404_NOT_FOUND)
+    except ObjectDoesNotExist:
+        return Response({'Error': 'failed to fetch data'}, status=status.HTTP_404_NOT_FOUND)
+    srl = serializers.DotSerializer(dot, many=True)
     return Response(srl.data)

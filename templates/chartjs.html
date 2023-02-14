@@ -30,7 +30,7 @@
                     <div class="col-12 my-0">
                         <div class="text-end pt-1">
                             
-                            <h4 class="mb-1">5000</h4>
+                            <h4 class="mb-1" id="objectif">5000</h4>
                         </div>
 
                     </div>
@@ -47,12 +47,12 @@
                 
                 <div class="card-header p-3 pt-2">
                     <div class="row">
-                        <div class="col-12"><h4>norme</h4></div>
+                        <div class="col-12" ><h4>norme</h4></div>
                     </div>
                     <div class="col-12 my-0">
                         <div class="text-end pt-1">
                             
-                            <h4 class="mb-0">5000</h4>
+                            <h4 class="mb-0" id="norme"></h4>
                         </div>
 
                     </div>
@@ -201,15 +201,6 @@
         </div>                
     </div>
 </div>
-
-
-<script>
-    $(function () {
-      $('#start-month').datetimepicker({
-        format: 'MM/YYYY'
-      });
-    });
-  </script>
 
 
 <script>
@@ -394,10 +385,12 @@ let ctx4 = document.getElementById('dhft').getContext('2d');
             }
         }
 });
+const norme = document.getElementById("norme");
+const objectif = document.getElementById("objectif");
 
     
 let input = null;
-    const getData = async (chart1,chart2,chart3,chart4,url) => {
+    const getData = async (chart1,chart2,chart3,chart4,nor,obj,url) => {
         const resp = await fetch('http://127.0.0.1:8000/api/cmps/?month=1');
         const data = await resp.json();
         if (data.length === 0) {
@@ -415,6 +408,8 @@ let input = null;
             chart4.data.datasets[1].data = [];
             chart4.data.datasets[2].data = [];
             chart4.update();
+            obj.textContent=0;
+            nor.textContent=0;
 
 
         }
@@ -424,15 +419,13 @@ let input = null;
             const la_ls=data.map(info => info.la_ls);
             const total=data.map(info => info.total);
             const date = data.map(info => info.date);
-            const dhdb=data.map(info => info.dhdb); 
+            const dhdb=data.map(info => info.dhdb);
+            const today = new Date();
+            const todaynor=data.filter(function (obj){
+                return obj.date === today.toDateString();
+            })
+            
             const total_raccordement_client=data.map(info => info.total_raccordement_client);
-            console.log(binome);
-            console.log(ftth);
-            console.log(la_ls);
-            console.log(total);
-            console.log(date);
-            console.log(dhdb);
-            console.log(total_raccordement_client);
             
 
             chart1.data.datasets[0].data = total;
@@ -454,16 +447,80 @@ let input = null;
             chart4.data.datasets[1].data = dhdb;
             chart4.data.datasets[2].data = la_ls;
             chart4.update();
+            if (todaynor.length === 0){
+                obj.textContent="0";
+                nor.textContent="0";
+            }
+            else{
+                obj.textContent=todaynor[0].objectif.toString();
+                
+                nor.textContent=todaynor[0].norme.toString();
+            }
         }
         
 
         
 
     }
+   
 
-    getData(total,totalclient,bin,dhft,"").catch(err => console.log(err));
+    getData(total,totalclient,bin,dhft,norme,objectif,"").catch(err => console.log(err));
     
 </script>
+{% if dot.name == 'ALGER CENTRE' %}   
+<script>
+    
+
+     const changeselect = async (cmp,dot) => {
+        const resp = await fetch('http://127.0.0.1:8000/api/dotregion/')
+        const data = await resp.json();
+        console.log(data);
+        while (dot.options.length > 0) {
+            dot.remove(0);
+        }
+
+        while (cmp.options.length > 0) {
+            cmp.remove(0);
+        }
+        const option = document.createElement('option');
+        option.value = "all";
+        option.text = "all";
+        dot.add(option);
+        for (i in data){
+            const option = document.createElement('option');
+            option.value = data[i].id;
+            option.text = data[i].name;
+            dot.add(option);
+        }
+        const resp1 = await fetch('http://127.0.0.1:8000/api/region/')
+        const data1 = await resp1.json();
+        const option1 = document.createElement('option');
+        option1.value = "all";
+        option1.text = "all";
+        cmp.add(option1);
+        for (i in data1){
+            const option1 = document.createElement('option');
+            option1.value = data1[i].id;
+            option1.text = data1[i].name;
+            cmp.add(option1);
+        }
+
+    const CMP=document.getElementById("CMP");
+    const DOT=document.getElementById("DOT");
+    }
+    changeselect(CMP,DOT).catch(err => console.log(err));
+    
+
+
+</script>
+
+{% endif %}
+
+
+
+
+
+
 </body>
 </html>
 

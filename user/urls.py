@@ -11,4 +11,5 @@ urlpatterns = [
     path('api/cmp/<str:pk>/', views.getCmpInformation, name="cmp_info"),
     path('api/region/', views.getCmpsName, name="cmps_name"),
     path('api/region/<str:pk>/', views.getCmpName, name="cmp_name"),
+    path('api/dotregion/', views.getDotsName, name="dots_name"),
 ]
